@@ -5,11 +5,7 @@
     @include('navbar')
     {{-- Fin navbar --}}
 
-    <div class="divcontenido"
-        style="display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 0;">
+    <div class="divcontenido">
         @yield('contenido')
     </div>
 @endsection

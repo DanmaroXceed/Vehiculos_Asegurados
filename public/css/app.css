@@ -1,4 +1,4 @@
-#body{
+body{
     background-color: rgb(33, 37, 41);
 }
 
@@ -26,4 +26,14 @@
     z-index: 900;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
+    min-width: 30%;
+    min-height: 100px
+}
+
+.accordion {
+    --bs-accordion-btn-bg: rgb(39, 41, 61);
+    --bs-accordion-active-bg: rgb(0, 0, 0);
+    --bs-accordion-active-color: rgb(0, 0, 0);
+    --bs-accordion-bg: rgb(51, 49, 66);
+    
 }

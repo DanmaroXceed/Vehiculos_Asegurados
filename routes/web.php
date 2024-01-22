@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,20 +23,25 @@ Route::get('/', function () {
 Route::post('/', [LoginController::class, 'acceder'])->name('loggear');
 
 
-Route::get('/1', function () {
-    return view('reg_vehiculo');
-});
-
-
-
 Route::middleware(['auth'])->group(function () {
     //  Salir
     Route::post('/logout', [LoginController::class, 'salir'])->name('logout');
 
     //  Home
-    Route::get('home', function () {return view('home');})->name('home');
+    Route::get('/home', function () {return view('resumen');})->name('home');
+
+    //  Usuarios
+    Route::get('/us', [UserController::class, 'index'])->name('usuarios');
 
     //  Registrar usuarios
-    Route::get('/registrar', function () { return view('reg_usuario'); })->name('registrar');
-    Route::post('/registrar', [LoginController::class, 'registrar'])->name('guardar-nuevo-usuario');
+    Route::get('/us/registrar', function () { return view('reg_usuario'); })->name('registrar');
+    Route::post('/us/registrar', [LoginController::class, 'registrar'])->name('guardar-nuevo-usuario');
+
+    //  Vehiculos
+    Route::get('/va', [VehicController::class, 'index'])->name('vehiculos');
+
+    //  Registrar Vehiculo
+    Route::get('/va/registrar', function () { return view('reg_vehiculo'); })->name('registrarVA');
+    Route::post('/va/registrar', [VehicController::class, 'registrar'])->name('guardar-nuevo-VA');
+
 });

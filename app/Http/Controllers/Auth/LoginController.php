@@ -7,10 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Cargo;
+use App\Models\Unidad;
+use App\Models\Distrito;
 
 class LoginController extends Controller
 {
-    //
+    public function index(){
+        $cargos = Cargo::where('id', '>', 1)->get();
+        $unidades = Unidad::where('id', '>', 1)->get();
+        $distritos = Distrito::where('id', '>', 1)->get();
+
+        return view('reg_usuario', compact('cargos','unidades', 'distritos'));
+    }
+
+
     public function registrar(Request $request){
         //  Validar los datos
         $request -> validate([
@@ -28,6 +39,9 @@ class LoginController extends Controller
             $usuario -> password = Hash::make($request -> contra);
             $usuario -> email = $request -> correo;
             $usuario -> tipo = 0;
+            $usuario -> cargo_id = $request -> cargo_id;
+            $usuario -> unidad_id = $request -> unidad_id;
+            $usuario -> distrito_id = $request -> distrito_id;
 
             $usuario -> save();
             return redirect()->route('registrar')->with('correcto', 'Usuario creado satisfactoriamente');

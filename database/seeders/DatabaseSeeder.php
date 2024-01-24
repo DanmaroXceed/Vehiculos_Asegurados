@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Cargo;
+use App\Models\Unidad;
+use App\Models\Distrito;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,12 +18,27 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
+        Cargo::create([
+            'descripcion' => 'Administrador'
+        ]);
+
+        Unidad::create([
+            'descripcion' => 'Administrador'
+        ]);
+
+        Distrito::create([
+            'descripcion' => 'Administrador'
+        ]);
+
+        User::factory()->create([
             'name' => 'Administrador',
             'email' => 'admin@example.com',
             'usuario' => 'admin',
             'tipo' => 1,
-            'password' => 'Admin@'
+            'password' => 'Admin@',
+            'cargo_id' => 1,
+            'unidad_id' => 1,
+            'distrito_id' => 1,
         ]);
     }
 }

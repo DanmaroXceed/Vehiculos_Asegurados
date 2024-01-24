@@ -19,7 +19,10 @@
                     <div id="collapse{{ $user->id }}" class="accordion-collapse collapse text-white" data-bs-parent="#accordion">
                         <div class="accordion-body">
                             Usuario: {{ $user->usuario }} <br>
-                            Email: {{ $user->email }}
+                            Email: {{ $user->email }} <br>
+                            Cargo: {{ $user->cdesc }} <br>
+                            Unidad: {{ $user->udesc }} <br>
+                            Distrito: {{ $user->ddesc }} <br>
                         </div>
                     </div>
                 </div>

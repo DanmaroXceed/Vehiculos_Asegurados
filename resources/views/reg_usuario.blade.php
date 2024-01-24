@@ -9,16 +9,16 @@
                 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
                 text-align: center;
                 min-width: 30%;">
-        
+
         <div class="container p-4 my-4">
             <h3 class="mb-1 pb-3">Registrar usuario</h3>
             <form action="{{ route('guardar-nuevo-usuario') }}" method="POST">
                 @csrf
 
-                @if(session('correcto'))
+                @if (session('correcto'))
                     <h6 class="alert alert-success m-3">{{ session('correcto') }}</h6>
                 @endif
-                @if(session('error'))
+                @if (session('error'))
                     <h6 class="alert alert-danger m-3">{{ session('error') }}</h6>
                 @endif
 
@@ -57,6 +57,36 @@
                 <div class="mb-3">
                     <label for="password" class="form-label">Repetir contraseña</label>
                     <input value="" type="password" class="form-control" name="password">
+                </div>
+
+                <div class="mb-3">
+                    <label for="clasif" class="form-label">Cargo</label>
+                    <select class="form-select" aria-label="Default select example" name="cargo_id">
+                        <option selected>Seleccionar opcion</option>
+                        @foreach ($cargos as $cargo)
+                            <option value="{{ $cargo->id }}">{{ $cargo->descripcion }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="clasif" class="form-label">Unidad</label>
+                    <select class="form-select" aria-label="Default select example" name="unidad_id">
+                        <option selected>Seleccionar opcion</option>
+                        @foreach ($unidades as $unidad)
+                            <option value="{{ $unidad->id }}">{{ $unidad->descripcion }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="clasif" class="form-label">Distrito</label>
+                    <select class="form-select" aria-label="Default select example" name="distrito_id">
+                        <option selected>Seleccionar opcion</option>
+                        @foreach ($distritos as $distrito)
+                            <option value="{{ $distrito->id }}">{{ $distrito->descripcion }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Guardar</button>

@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/us', [UserController::class, 'index'])->name('usuarios');
 
     //  Registrar usuarios
-    Route::get('/us/registrar', function () { return view('reg_usuario'); })->name('registrar');
+    Route::get('/us/registrar', [LoginController::class, 'index'])->name('registrar');
     Route::post('/us/registrar', [LoginController::class, 'registrar'])->name('guardar-nuevo-usuario');
 
     //  Vehiculos

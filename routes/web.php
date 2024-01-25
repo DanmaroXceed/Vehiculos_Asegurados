@@ -41,7 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/va', [VehicController::class, 'index'])->name('vehiculos');
 
     //  Registrar Vehiculo
-    Route::get('/va/registrar', function () { return view('reg_vehiculo'); })->name('registrarVA');
+    Route::get('/va/registrar', [VehicController::class, 'cargar_catalogos'])->name('registrarVA');
+    Route::get('/get-tipo-v/{clasific_id}', [VehicController::class, 'get_tipos']);
     Route::post('/va/registrar', [VehicController::class, 'registrar'])->name('guardar-nuevo-VA');
 
 });

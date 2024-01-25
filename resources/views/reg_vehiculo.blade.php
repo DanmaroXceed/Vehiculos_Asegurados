@@ -1,18 +1,12 @@
 @extends('home')
 
 @section('contenido')
-    <div class="text-white m-3 contenido"
-        style = "width:fit-content;
-                border-radius: 10px; /* Bordes redondos */
-                background: rgb(39, 41, 61);
-                z-index: 900;
-                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-                text-align: center;">
+    <div class="text-white m-3 contenido">
         <div class="container p-4 my-4">
             <h3 class="mb-2 pb-5">Registrar vehiculo</h3>
             <form action="" method="POST">
                 @csrf
-                    
+
                 {{-- @error('nameDoc')
                     <h6 class="alert alert-danger">{{ $message }}</h6>
                 @enderror
@@ -35,49 +29,80 @@
 
                 <div class="row">
                     <div class="col">
-                        <div><h5>Del vehiculo</h5></div>
+                        <div>
+                            <h5>Del vehiculo</h5>
+                        </div>
+
                         <div class="mb-3">
-                            <label for="clasif" class="form-label" >Clasificacion</label>
+                            <label for="clasif" class="form-label">Clasificacion</label>
+                            <select class="form-select" aria-label="Default select example" name="clasific_id">
+                                <option selected>Seleccionar opcion</option>
+                                @foreach ($clasific as $clas)
+                                    <option value="{{ $clas->id }}">{{ $clas->descripcion }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tipo_id" class="form-label">Tipo</label>
+                            <select class="form-select" aria-label="Default select example" name="tipo_id">
+                                <option selected>Seleccionar opcion</option>
+                            </select>
+
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            <script>
+                                $('select[name="clasific_id"]').on('change', function(e) {
+                                    var brand = $(this).val();
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '/get-tipo-v/' + brand,
+                                        success: function success(data) {
+                                            // Quitar todas las opciones del select
+                                            $('select[name="tipo_id"]').children('option').remove();
+
+                                            // Preparar los datos para añadir cada opción nueva al select
+                                            var options = JSON.parse(data);
+                                            for (let i = 0; i < options.length; i++) {
+                                                $('select[name="tipo_id"]').append('<option value="' + options[i]['id'] +
+                                                    '" selected="selected">' + options[i]['descripcion'] + '</option>');
+                                            }
+                                        },
+                                        error: function error(data) {
+                                            console.log("Error", data);
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="submarca" class="form-label">Marca</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar opcion</option>
                                 <option value="1">One</option>
-                              </select>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="marca" class="form-label" >Marca</label>
+                            <label for="tipo" class="form-label">Submarca</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar opcion</option>
                                 <option value="1">One</option>
-                              </select>
-                        </div> 
-                        <div class="mb-3">
-                            <label for="submarca" class="form-label" >Sub marca</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Seleccionar opcion</option>
-                                <option value="1">One</option>
-                              </select>
-                        </div> 
-                        <div class="mb-3">
-                            <label for="tipo" class="form-label" >Tipo</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Seleccionar opcion</option>
-                                <option value="1">One</option>
-                              </select>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="color" class="form-label" >Color</label>
+                            <label for="color" class="form-label">Color</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar opcion</option>
                                 <option value="1">One</option>
-                              </select>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="anio" class="form-label" >Año del modelo</label>
+                            <label for="anio" class="form-label">Año del modelo</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar opcion</option>
                                 <option value="1">One</option>
-                              </select>
-                        </div> 
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="serieO" class="form-label">Serie original</label>
                             <input value="" type="text" class="form-control" name="serieO">
@@ -95,16 +120,18 @@
                             <input value="" type="text" class="form-control" name="serieA">
                         </div>
                         <div class="mb-3">
-                            <label for="orSob" class="form-label" >Original/Sobrepuestas</label>
+                            <label for="orSob" class="form-label">Original/Sobrepuestas</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>Seleccionar opcion</option>
                                 <option value="1">Original</option>
                                 <option value="2">Sobrepuestas</option>
-                              </select>
+                            </select>
                         </div>
                     </div>
                     <div class="col">
-                        <div><h5>Del lugar</h5></div>
+                        <div>
+                            <h5>Del lugar</h5>
+                        </div>
                         <div class="mb-3">
                             <label for="lugAseg" class="form-label">Lugar de aseguramiento</label>
                             <input value="" type="text" class="form-control" name="serieA">
@@ -135,7 +162,9 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div><h5>Motivo</h5></div>
+                        <div>
+                            <h5>Motivo</h5>
+                        </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Motivo de aseguramiento</label>
                             <input value="" type="text" class="form-control" name="serieA">
@@ -158,7 +187,9 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div><h5>Autoridad</h5></div>
+                        <div>
+                            <h5>Autoridad</h5>
+                        </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Autoridad que recibe</label>
                             <input value="" type="text" class="form-control" name="serieA">
@@ -177,7 +208,9 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div><h5>Captura</h5></div>
+                        <div>
+                            <h5>Captura</h5>
+                        </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Elemento que captura</label>
                             <input value="" type="text" class="form-control" name="serieA">

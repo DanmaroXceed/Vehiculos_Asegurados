@@ -40,5 +40,13 @@ class DatabaseSeeder extends Seeder
             'unidad_id' => 1,
             'distrito_id' => 1,
         ]);
+
+        $this->call(CargoSeeder::class);
+        $this->call(UnidadSeeder::class);
+        $this->call(DistritoSeeder::class);
+        $this->call(ClasificVehiSeeder::class);
+        $this->call(TipoVehiSeeder::class);
+        $this->call(MarcaSeeder::class);
+        $this->call(SubmarcaSeeder::class);
     }
 }

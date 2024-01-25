@@ -48,5 +48,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoVehiSeeder::class);
         $this->call(MarcaSeeder::class);
         $this->call(SubmarcaSeeder::class);
+        $this->call(MotivosSeeder::class);
+        $this->call(AutoridadesSeeder::class);
+        $this->call(FuentesInfoSeeder::class);
+        $this->call(FormasRoboSeeder::class);
     }
 }

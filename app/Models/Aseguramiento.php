@@ -12,7 +12,7 @@ class Aseguramiento extends Model
     protected $fillable = [
         'motivo_id',
         'autoridad_as_id',
-        'Personas',
+        'personas',
         'deposito',
         'fecha',
         'datos_robo_id'

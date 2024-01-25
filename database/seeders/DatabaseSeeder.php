@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Models\Cargo;
 use App\Models\Unidad;
 use App\Models\Distrito;
+use App\Models\DatosRobo;
+use App\Models\FuenteInfo;
+use App\Models\FormaRobo;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,6 +31,21 @@ class DatabaseSeeder extends Seeder
 
         Distrito::create([
             'descripcion' => 'Administrador'
+        ]);
+
+        FuenteInfo::create([
+            'descripcion' => 'N/A'
+        ]);
+
+        FormaRobo::create([
+            'descripcion' => 'N/A'
+        ]);
+
+        DatosRobo::create([
+            'fuente_id' => 1,
+            'lugar' => 'N/A',
+            'fecha' => "1000-01-01",
+            'forma_robo_id' => 1
         ]);
 
         User::factory()->create([

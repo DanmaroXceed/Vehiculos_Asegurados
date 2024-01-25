@@ -20,14 +20,16 @@ return new class extends Migration
 
         Schema::table('datos_robo', function (Blueprint $table){
             $table->unsignedBigInteger('fuente_id');
-            $table->foreign('fuente_id')->references('id')->on('fuentes_info')->nullable()
+            $table->foreign('fuente_id')->references('id')->on('fuentes_info')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('cascade')
+                ->nullable();
             
             $table->unsignedBigInteger('forma_robo_id');
-            $table->foreign('forma_robo_id')->references('id')->on('formas_robo')->nullable()
+            $table->foreign('forma_robo_id')->references('id')->on('formas_robo')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('cascade')
+                ->nullable();
         });
     }
 

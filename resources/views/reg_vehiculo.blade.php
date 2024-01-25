@@ -173,6 +173,83 @@
                         </div>
 
                     </div>
+
+                    <div class="col">
+                        <div>
+                            <h5>Aseguramiento</h5>
+                        </div>
+                        <div class="mb-3">
+                            <label for="motivo_id" class="form-label">Motivo</label>
+                            <select class="form-select" aria-label="Default select example" name="motivo_id" id="motivo_id">
+                                <option selected>Seleccionar opcion</option>
+                                @foreach ($motivos as $motivo)
+                                    <option value="{{ $motivo->id }}">{{ $motivo->descripcion }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="autoridad_as_id" class="form-label">Autoridad que asegura</label>
+                            <select class="form-select" aria-label="Default select example" name="autoridad_as_id">
+                                <option selected>Seleccionar opcion</option>
+                                @foreach ($autoridades as $autoridad)
+                                    <option value="{{ $autoridad->id }}">{{ $autoridad->descripcion }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="personas" class="form-label">Persona(s) a quien se asegura</label>
+                            <input value="" type="text" class="form-control" name="personas">
+                        </div>
+                        <div class="mb-3">
+                            <label for="deposito" class="form-label">Local o lugar de deposito</label>
+                            <input value="" type="text" class="form-control" name="deposito">
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha de aseguramiento</label>
+                            <input value="" type="date" class="form-control" name="fecha">
+                        </div>
+                        
+                        <div id="datos_robo" class="mb-3" style="display:none;">
+                            <h5>Datos del robo</h5>
+                            <label for="fuente_id" class="form-label">Fuente de informacion</label>
+                            <select class="form-select" aria-label="Default select example" name="fuente_id">
+                                <option selected>Seleccionar opcion</option>
+                                @foreach ($fuentesinfo as $fuente)
+                                    <option value="{{ $fuente->id }}">{{ $fuente->descripcion }}</option>
+                                @endforeach
+                            </select>
+
+                            <label for="lugarrobo" class="form-label">Lugar</label>
+                            <input value="" type="text" class="form-control" name="lugarrobo">
+
+                            <label for="fecharobo" class="form-label">Fecha</label>
+                            <input value="" type="date" class="form-control" name="fecharobo">
+
+                            <label for="forma_robo_id" class="form-label">Forma de robo</label>
+                            <select class="form-select" aria-label="Default select example" name="forma_robo_id">
+                                <option selected>Seleccionar opcion</option>
+                                @foreach ($formasrobo as $forma)
+                                    <option value="{{ $forma->id }}">{{ $forma->descripcion }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                $('#motivo_id').on('change', function() {
+                                    var selectedValue = $(this).val();
+                                    if (selectedValue == 1) {
+                                        $('#datos_robo').show();
+                                    } else {
+                                        $('#datos_robo').hide();
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
+
                     <div class="col">
                         <div>
                             <h5>Del lugar</h5>
@@ -206,31 +283,7 @@
                             <input value="" type="text" class="form-control" name="serieA">
                         </div>
                     </div>
-                    <div class="col">
-                        <div>
-                            <h5>Motivo</h5>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Motivo de aseguramiento</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Fecha de aseguramiento</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Local o lugar de deposito</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Autoridad que asegura</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Persona(s) a quien se asegura</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                    </div>
+                    
                     <div class="col">
                         <div>
                             <h5>Autoridad</h5>
@@ -249,23 +302,6 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Delito que se investiga</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div>
-                            <h5>Captura</h5>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Elemento que captura</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Cargo</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Unidad o distrito de adscripcion</label>
                             <input value="" type="text" class="form-control" name="serieA">
                         </div>
                     </div>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('no_motor', 20);
             $table->string('placas', 10);
             $table->text('cond_vehi', 300);
+            $table->string('or_sob');
             $table->timestamps();
         });
 

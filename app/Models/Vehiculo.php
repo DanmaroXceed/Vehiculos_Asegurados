@@ -20,6 +20,7 @@ class Vehiculo extends Model
         's_apo',
         'no_motor',
         'placas',
-        'cond_vehi'
+        'cond_vehi',
+        'or_sob'
     ];
 }

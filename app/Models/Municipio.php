@@ -10,7 +10,8 @@ class Municipio extends Model
     use HasFactory;
 
     protected $fillable = [
-        'estado_id',
+        'est_id',
+        'mun_id',
         'descripcion',
     ];
 }

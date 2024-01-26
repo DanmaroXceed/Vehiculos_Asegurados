@@ -70,5 +70,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AutoridadesSeeder::class);
         $this->call(FuentesInfoSeeder::class);
         $this->call(FormasRoboSeeder::class);
+        $this->call(EstadosSeeder::class);
     }
 }

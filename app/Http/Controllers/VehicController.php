@@ -15,6 +15,9 @@ use App\Models\FormaRobo;
 use App\Models\FuenteInfo;
 use App\Models\Aseguramiento;
 use App\Models\DatosRobo;
+use App\Models\Estado;
+use App\Models\Municipio;
+use App\Models\Localidad;
 
 class VehicController extends Controller
 {
@@ -65,7 +68,8 @@ class VehicController extends Controller
         $autoridades = Autoridad::All();
         $formasrobo = FormaRobo::where('id', '>', 1)->get();
         $fuentesinfo = FuenteInfo::where('id', '>', 1)->get();
-        return view('reg_vehiculo', compact('clasific','marcas', 'motivos', 'autoridades','formasrobo','fuentesinfo'));
+        $estados = Estado::All();
+        return view('reg_vehiculo', compact('clasific','marcas', 'motivos', 'autoridades','formasrobo','fuentesinfo', 'estados'));
     }
 
     public function get_tipos($clasific_id) {
@@ -74,6 +78,14 @@ class VehicController extends Controller
 
     public function get_submarca($marca_id) {
         return json_encode(Submarca::select('*')->where('marca_id', $marca_id)->get());
+    }
+
+    public function get_municipios($id) {
+        return json_encode(Municipio::select('*')->where('estado_id', $id)->get());
+    }
+
+    public function get_localidades($id) {
+        return json_encode(Localidad::select('*')->where('municipio_id', $id)->get());
     }
 
     public function registrar(Request $request){

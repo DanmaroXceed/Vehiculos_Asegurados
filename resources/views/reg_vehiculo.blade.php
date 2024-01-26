@@ -255,7 +255,20 @@
                             <h5>Del lugar</h5>
                         </div>
                         <div class="mb-3">
-                            <label for="lugAseg" class="form-label">Lugar de aseguramiento</label>
+                            <label for="estado_id" class="form-label">Estado</label>
+                            <select class="form-select" aria-label="Default select example" name="estado_id">
+                                <option selected>Seleccionar opcion</option>
+                                @foreach ($estados as $estado)
+                                    <option value="{{ $estado->id }}">{{ $estado->descripcion }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Municipio</label>
+                            <input value="" type="text" class="form-control" name="serieA">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Localidad</label>
                             <input value="" type="text" class="form-control" name="serieA">
                         </div>
                         <div class="mb-3">
@@ -271,15 +284,7 @@
                             <input value="" type="text" class="form-control" name="serieA">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Comunidad</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Municipio</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Estado</label>
+                            <label for="lugAseg" class="form-label">Lugar de aseguramiento</label>
                             <input value="" type="text" class="form-control" name="serieA">
                         </div>
                     </div>

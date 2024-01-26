@@ -3,7 +3,10 @@
 @section('contenido')
     <div class="text-white pl-3 contenido">
         <div class="p-3">
-            Cantidad de vehiculos Asegurados
+            Cantidad de vehiculos Asegurados <br>
+            <div style="font-size: 30px">
+                {{ $vehiculos }}
+            </div>
         </div>
     </div>
     <div class="text-white m-3 contenido">

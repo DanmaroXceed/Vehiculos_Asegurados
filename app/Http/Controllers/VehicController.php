@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Clasif_vehi;
 use App\Models\Tipo_vehi;
 use App\Models\Marca;
@@ -18,7 +19,43 @@ use App\Models\DatosRobo;
 class VehicController extends Controller
 {
     public function index(Request $request){
-        return view('vehiculos');
+        $vehiculos = Vehiculo::select(
+        'vehiculos.*', 
+        'clasific_vehi.descripcion as clasificacion', 
+        'tipo_vehi.descripcion as tipo', 
+        'marcas.descripcion as marca', 
+        'submarcas.descripcion as submarca')
+        ->join('clasific_vehi', 'vehiculos.clasific_id', '=', 'clasific_vehi.id')
+        ->join('tipo_vehi', 'vehiculos.tipo_id', '=', 'tipo_vehi.id')
+        ->join('marcas', 'vehiculos.marca_id', '=', 'marcas.id')
+        ->join('submarcas', 'vehiculos.submarca_id', '=', 'submarcas.id')
+        ->get();
+
+        $aseguramientos = Aseguramiento::select(
+            'aseguramientos.*', 
+            'motivos.descripcion as motivo', 
+            'autoridades.descripcion as autoridad', 
+            'fuentes_info.descripcion as fuenteinfo', 
+            'formas_robo.descripcion as formarobo',
+            'datos_robo.lugar as lugarR',
+            'datos_robo.fecha as fechaR')
+            ->join('motivos', 'aseguramientos.motivo_id', '=', 'motivos.id')
+            ->join('autoridades', 'aseguramientos.autoridad_as_id', '=', 'autoridades.id')
+            ->join('datos_robo', 'aseguramientos.datos_robo_id', '=', 'datos_robo.id')
+            ->join('fuentes_info', 'datos_robo.fuente_id', '=', 'fuentes_info.id')
+            ->join('formas_robo', 'datos_robo.forma_robo_id', '=', 'formas_robo.id')
+            ->get();
+
+        
+        return view('vehiculos', compact('vehiculos', 'aseguramientos'));
+    }
+
+    public function contarVehiculos(){
+        $vehiculos = DB::scalar(
+            "select count(id) from vehiculos"
+        );
+        return view('resumen', compact('vehiculos'));
+
     }
 
     public function cargar_catalogos(Request $request){

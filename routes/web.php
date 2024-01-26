@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LoginController::class, 'salir'])->name('logout');
 
     //  Home
-    Route::get('/home', function () {return view('resumen');})->name('home');
+    Route::get('/home', [VehicController::class, 'contarVehiculos'])->name('home');
 
     //  Usuarios
     Route::get('/us', [UserController::class, 'index'])->name('usuarios');

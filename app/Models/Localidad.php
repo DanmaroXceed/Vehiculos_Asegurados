@@ -12,8 +12,9 @@ class Localidad extends Model
     protected $table = "localidades";
 
     protected $fillable = [
-        'municipio_id',
-        'estado_id',
+        'est_id',
+        'mun_id',
+        'loc_id',
         'descripcion',
     ];
 }

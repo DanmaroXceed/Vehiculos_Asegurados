@@ -72,5 +72,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FormasRoboSeeder::class);
         $this->call(EstadosSeeder::class);
         $this->call(MunicipiosSeeder::class);
+        $this->call(LocalidadesSeeder::class);
     }
 }

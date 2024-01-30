@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('localidades', function (Blueprint $table) {
+        Schema::create('lugares', function (Blueprint $table) {
+            $table->id();
             $table->uuid('est_id');
             $table->uuid('mun_id');
             $table->uuid('loc_id');
-            $table->string('descripcion',100);
 
+            $table->foreign(['est_id', 'mun_id', 'loc_id'])->references(['est_id', 'mun_id', 'loc_id'])->on('localidades')->onDelete('cascade');
+
+            $table->string('calle', 80);
+            $table->string('numero', 20);
+            $table->string('colonia', 80);
             $table->timestamps();
-            $table->primary(['est_id', 'mun_id', 'loc_id']);
-            $table->foreign(['est_id', 'mun_id'])->references(['est_id', 'mun_id'])->on('municipios')->onDelete('cascade');
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('localidades');
+        Schema::dropIfExists('lugares');
     }
 };

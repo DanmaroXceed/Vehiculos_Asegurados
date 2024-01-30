@@ -32,15 +32,26 @@
                         Condiciones del vehiculo: {{ $vehiculo->cond_vehi }} <br>
                         Original / Sobrepuesta: {{ $vehiculo->or_sob }} <br><br>
                         
-                        Motivo: {{ $aseguramientos[($vehiculo->id)-1]->motivo }}<br>
-                        Autoridad que asegura: {{ $aseguramientos[($vehiculo->id)-1]->autoridad }}<br>
-                        Personas aseguradas: {{ $aseguramientos[($vehiculo->id)-1]->personas }}<br>
-                        Lugar de deposito: {{ $aseguramientos[($vehiculo->id)-1]->deposito }}<br>
-                        Fecha de aseguramiento: {{ $aseguramientos[($vehiculo->id)-1]->fecha }}<br>
-                        Forma de robo: {{ $aseguramientos[($vehiculo->id)-1]->formarobo }}<br>
-                        Fuente de informacion: {{ $aseguramientos[($vehiculo->id)-1]->fuenteinfo }}<br>
-                        Lugar del robo: {{ $aseguramientos[($vehiculo->id)-1]->lugarR }}<br>
-                        Fecha del robo: {{ $aseguramientos[($vehiculo->id)-1]->fechaR }}<br>
+                        @if (count($aseguramientos) >0)
+                            Motivo: {{ $aseguramientos[($vehiculo->id)-1]->motivo }}<br>
+                            Autoridad que asegura: {{ $aseguramientos[($vehiculo->id)-1]->autoridad }}<br>
+                            Personas aseguradas: {{ $aseguramientos[($vehiculo->id)-1]->personas }}<br>
+                            Lugar de deposito: {{ $aseguramientos[($vehiculo->id)-1]->deposito }}<br>
+                            Fecha de aseguramiento: {{ $aseguramientos[($vehiculo->id)-1]->fecha }}<br>
+                            Forma de robo: {{ $aseguramientos[($vehiculo->id)-1]->formarobo }}<br>
+                            Fuente de informacion: {{ $aseguramientos[($vehiculo->id)-1]->fuenteinfo }}<br>
+                            Lugar del robo: {{ $aseguramientos[($vehiculo->id)-1]->lugarR }}<br>
+                            Fecha del robo: {{ $aseguramientos[($vehiculo->id)-1]->fechaR }}<br><br>
+                        @endif
+
+                        @if (count($lugares) > 0)
+                            Estado: {{ $lugares[($vehiculo->id)-1]->est }}<br>
+                            Municipio: {{ $lugares[($vehiculo->id)-1]->mun }}<br>
+                            Localidad: {{ $lugares[($vehiculo->id)-1]->loc }}<br>
+                            Calle: {{ $lugares[($vehiculo->id)-1]->calle }}<br>
+                            Numero: {{ $lugares[($vehiculo->id)-1]->numero }}<br>
+                            Colonia: {{ $lugares[($vehiculo->id)-1]->colonia }}<br>
+                        @endif
 
                     </div>
                 </div>

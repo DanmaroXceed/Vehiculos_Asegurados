@@ -18,6 +18,7 @@ use App\Models\DatosRobo;
 use App\Models\Estado;
 use App\Models\Municipio;
 use App\Models\Localidad;
+use App\Models\Lugar;
 
 class VehicController extends Controller
 {
@@ -49,8 +50,21 @@ class VehicController extends Controller
             ->join('formas_robo', 'datos_robo.forma_robo_id', '=', 'formas_robo.id')
             ->get();
 
+        $lugares = DB::select(
+            'select lugares.*, 
+            estados.descripcion as est,
+            municipios.descripcion as mun,
+            localidades.descripcion as loc
+            from lugares
+            inner join estados on estados.id = lugares.est_id
+            inner join municipios on municipios.mun_id = lugares.mun_id
+            inner join localidades on localidades.loc_id = lugares.loc_id
+            where localidades.est_id = lugares.est_id
+            and localidades.mun_id = lugares.mun_id
+            and localidades.loc_id = lugares.loc_id'
+        );
         
-        return view('vehiculos', compact('vehiculos', 'aseguramientos'));
+        return view('vehiculos', compact('vehiculos', 'aseguramientos', 'lugares'));
     }
 
     public function contarVehiculos(){
@@ -81,11 +95,22 @@ class VehicController extends Controller
     }
 
     public function get_municipios($id) {
-        return json_encode(Municipio::select('*')->where('estado_id', $id)->get());
+        if($id < 10){
+            $id = '0'+ $id;
+        }
+        return json_encode(Municipio::select('*')->where('est_id', $id)->orderBy('descripcion')->get());
     }
 
-    public function get_localidades($id) {
-        return json_encode(Localidad::select('*')->where('municipio_id', $id)->get());
+    public function get_localidades($mun, $est) {
+        if($mun < 10){
+            $mun = '000'+ $mun;
+        }elseif($mun < 100){
+            $mun = '00'+ $mun;
+        }
+        return json_encode(Localidad::select('*')
+            ->where('mun_id', $mun)
+            ->where('est_id', $est)
+            ->orderBy('descripcion')->get());
     }
 
     public function registrar(Request $request){
@@ -101,6 +126,7 @@ class VehicController extends Controller
         $vehi = new Vehiculo();
         $aseg = new Aseguramiento();
         $datos_r = new DatosRobo();
+        $lugar = new Lugar();
 
         try {
             $vehi -> clasific_id = $request -> clasific_id;
@@ -116,7 +142,7 @@ class VehicController extends Controller
             $vehi -> cond_vehi = $request -> cond_vehi;
             $vehi -> or_sob = $request -> or_sob;
 
-            $vehi -> save();
+            //$vehi -> save();
 
             if($request -> motivo_id == 1){
                 $datos_r -> fuente_id = $request -> fuente_id;
@@ -124,7 +150,7 @@ class VehicController extends Controller
                 $datos_r -> fecha = $request -> fecharobo;
                 $datos_r -> forma_robo_id = $request -> forma_robo_id;
 
-                $datos_r -> save();
+                //$datos_r -> save();
             }else{
                 $datos_r -> id = 1;
             }
@@ -136,7 +162,19 @@ class VehicController extends Controller
             $aseg -> fecha = $request -> fecha;
             $aseg -> datos_robo_id = $datos_r -> id;
 
-            $aseg -> save();
+            //$aseg -> save();
+            
+            $lugar -> est_id = $request -> est_id < 10 ? '0' . $request -> est_id : $request -> est_id;
+            $lugar -> mun_id = $request -> municipio;
+            $lugar -> loc_id = $request -> localidad;
+            $lugar -> calle = $request -> calle;
+            $lugar -> numero = $request -> numero;
+            $lugar -> colonia = $request -> colonia;
+
+            $lugar -> save();
+
+            //echo($lugar);
+
             return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
         } catch (\Illuminate\Database\QueryException $ex) {
             echo($ex);

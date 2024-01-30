@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('municipios', function (Blueprint $table) {
             $table->uuid('est_id');
             $table->uuid('mun_id');
-            $table->string('descripcion', 100);            
+            $table->string('descripcion', 100);
+
             $table->timestamps();
+
+            $table->primary(['est_id', 'mun_id']);
+            $table->foreign('est_id')->references('id')->on('estados')->onDelete('cascade');           
         });
     }
 

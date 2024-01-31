@@ -50,7 +50,14 @@
                             Localidad: {{ $lugares[($vehiculo->id)-1]->loc }}<br>
                             Calle: {{ $lugares[($vehiculo->id)-1]->calle }}<br>
                             Numero: {{ $lugares[($vehiculo->id)-1]->numero }}<br>
-                            Colonia: {{ $lugares[($vehiculo->id)-1]->colonia }}<br>
+                            Colonia: {{ $lugares[($vehiculo->id)-1]->colonia }}<br><br>
+                        @endif
+
+                        @if (count($recibimientos) > 0)
+                            Autoridad que recibe: {{ $recibimientos[($vehiculo->id)-1]->aut_rec }}<br>
+                            Titular: {{ $recibimientos[($vehiculo->id)-1]->titular }}<br>
+                            Carpeta de investigacion: {{ $recibimientos[($vehiculo->id)-1]->cpet_inv }}<br>
+                            Delito que se investiga: {{ $recibimientos[($vehiculo->id)-1]->delito }}<br>
                         @endif
 
                     </div>

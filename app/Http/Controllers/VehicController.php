@@ -19,6 +19,8 @@ use App\Models\Estado;
 use App\Models\Municipio;
 use App\Models\Localidad;
 use App\Models\Lugar;
+use App\Models\Delito;
+use App\Models\Recibimiento;
 
 class VehicController extends Controller
 {
@@ -63,8 +65,15 @@ class VehicController extends Controller
             and localidades.mun_id = lugares.mun_id
             and localidades.loc_id = lugares.loc_id'
         );
+
+        $recibimientos = Recibimiento::select(
+            'recibimientos.*',
+            'delitos.descripcion as delito'
+        )
+        ->join('delitos', 'recibimientos.delito_id','=','delitos.id')
+        ->get();
         
-        return view('vehiculos', compact('vehiculos', 'aseguramientos', 'lugares'));
+        return view('vehiculos', compact('vehiculos', 'aseguramientos', 'lugares', 'recibimientos'));
     }
 
     public function contarVehiculos(){
@@ -83,7 +92,8 @@ class VehicController extends Controller
         $formasrobo = FormaRobo::where('id', '>', 1)->get();
         $fuentesinfo = FuenteInfo::where('id', '>', 1)->get();
         $estados = Estado::All();
-        return view('reg_vehiculo', compact('clasific','marcas', 'motivos', 'autoridades','formasrobo','fuentesinfo', 'estados'));
+        $delitos = Delito::All();
+        return view('reg_vehiculo', compact('clasific','marcas', 'motivos', 'autoridades','formasrobo','fuentesinfo', 'estados', 'delitos'));
     }
 
     public function get_tipos($clasific_id) {
@@ -127,6 +137,7 @@ class VehicController extends Controller
         $aseg = new Aseguramiento();
         $datos_r = new DatosRobo();
         $lugar = new Lugar();
+        $recib = new Recibimiento();
 
         try {
             $vehi -> clasific_id = $request -> clasific_id;
@@ -173,7 +184,16 @@ class VehicController extends Controller
 
             //$lugar -> save();
 
-            //return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
+            $recib -> aut_rec = $request -> aut_rec;
+            $recib -> titular = $request -> titular;
+                $cpet = $request -> cpet1 . '/' . $request -> cpet2 . '-' . $request -> cpet3;
+            $recib -> cpet_inv = $cpet;
+            $recib -> delito_id = $request -> delito_id;
+
+            // echo($recib);
+            $recib -> save();
+
+            return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
         } catch (\Illuminate\Database\QueryException $ex) {
             echo($ex);
         }

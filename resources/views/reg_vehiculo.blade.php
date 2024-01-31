@@ -348,20 +348,29 @@
                             <h5>Autoridad</h5>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Autoridad que recibe</label>
-                            <input value="" type="text" class="form-control" name="serieA">
+                            <label for="aut_rec" class="form-label">Autoridad que recibe</label>
+                            <input value="" type="text" class="form-control" name="aut_rec">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Nombre del titular</label>
-                            <input value="" type="text" class="form-control" name="serieA">
+                            <label for="titular" class="form-label">Nombre del titular</label>
+                            <input value="" type="text" class="form-control" name="titular">
+                        </div>
+                        <label for="" class="form-label">Carpeta de investigacion</label>
+                        <div class="mb-3 d-flex">
+                            <input style="margin:5px" type="text" class="form-control" name="cpet1">
+                            <strong class="my-3">/</strong>
+                            <input style="margin:5px" type="text" class="form-control" name="cpet2">
+                            <strong class="my-3">-</strong>
+                            <input style="margin:5px" type="text" class="form-control" name="cpet3">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">C.U.I</label>
-                            <input value="" type="text" class="form-control" name="serieA">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Delito que se investiga</label>
-                            <input value="" type="text" class="form-control" name="serieA">
+                            <label for="delito_id" class="form-label">Delito que se investiga</label>
+                            <select class="form-select" name="delito_id">
+                                <option selected>Seleccionar opcion</option>
+                                @foreach ($delitos as $delito)
+                                    <option value="{{ $delito->id }}">{{ $delito->descripcion }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>

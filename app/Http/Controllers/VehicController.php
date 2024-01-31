@@ -171,11 +171,9 @@ class VehicController extends Controller
             $lugar -> numero = $request -> numero;
             $lugar -> colonia = $request -> colonia;
 
-            $lugar -> save();
+            //$lugar -> save();
 
-            //echo($lugar);
-
-            return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
+            //return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
         } catch (\Illuminate\Database\QueryException $ex) {
             echo($ex);
         }

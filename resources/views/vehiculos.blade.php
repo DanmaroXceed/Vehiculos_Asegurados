@@ -8,57 +8,57 @@
     </div>
 
     <div class="accordion" id="accordion" >
-        @foreach ($vehiculos as $vehiculo)
+        @foreach ($registros as $registro)
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed text-white" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapse{{ $vehiculo->id }}" aria-expanded="true"
-                        aria-controls="collapse{{ $vehiculo->id }}">
-                        {{ $vehiculo->id }}: {{ $vehiculo->submarca }}
+                        data-bs-target="#collapse{{ $registro->id }}" aria-expanded="true"
+                        aria-controls="collapse{{ $registro->id }}">
+                        {{ $registro->id }}: {{ $registro->submarca }}
                     </button>
                 </h2>
-                <div id="collapse{{ $vehiculo->id }}" class="accordion-collapse collapse text-white" data-bs-parent="#accordion">
+                <div id="collapse{{ $registro->id }}" class="accordion-collapse collapse text-white" data-bs-parent="#accordion">
                     <div class="accordion-body">
-                        Clasificacion: {{ $vehiculo->clasificacion }}<br>
-                        Tipo: {{ $vehiculo->tipo }} <br>
-                        Marca: {{ $vehiculo->marca }} <br>
-                        Submarca: {{ $vehiculo->submarca }} <br>
-                        Color: {{ $vehiculo->color }} <br>
-                        Año del modelo: {{ $vehiculo->anio_mod }} <br>
-                        Serie original: {{ $vehiculo->s_orig }} <br>
-                        Serie apocrifa: {{ $vehiculo->s_apo }} <br>
-                        Numero del motor: {{ $vehiculo->no_motor }} <br>
-                        Placas: {{ $vehiculo->placas }} <br>
-                        Condiciones del vehiculo: {{ $vehiculo->cond_vehi }} <br>
-                        Original / Sobrepuesta: {{ $vehiculo->or_sob }} <br><br>
+                        Clasificacion: {{ $registro->clasificacion }}<br>
+                        Tipo: {{ $registro->tipo }} <br>
+                        Marca: {{ $registro->marca }} <br>
+                        Submarca: {{ $registro->submarca }} <br>
+                        Color: {{ $registro->color }} <br>
+                        Año del modelo: {{ $registro->anio_mod }} <br>
+                        Serie original: {{ $registro->s_orig }} <br>
+                        Serie apocrifa: {{ $registro->s_apo }} <br>
+                        Numero del motor: {{ $registro->no_motor }} <br>
+                        Placas: {{ $registro->placas }} <br>
+                        Condiciones del registro: {{ $registro->cond_vehi }} <br>
+                        Original / Sobrepuesta: {{ $registro->or_sob }} <br><br>
                         
-                        @if (count($aseguramientos) >0)
-                            Motivo: {{ $aseguramientos[($vehiculo->id)-1]->motivo }}<br>
-                            Autoridad que asegura: {{ $aseguramientos[($vehiculo->id)-1]->autoridad }}<br>
-                            Personas aseguradas: {{ $aseguramientos[($vehiculo->id)-1]->personas }}<br>
-                            Lugar de deposito: {{ $aseguramientos[($vehiculo->id)-1]->deposito }}<br>
-                            Fecha de aseguramiento: {{ $aseguramientos[($vehiculo->id)-1]->fecha }}<br>
-                            Forma de robo: {{ $aseguramientos[($vehiculo->id)-1]->formarobo }}<br>
-                            Fuente de informacion: {{ $aseguramientos[($vehiculo->id)-1]->fuenteinfo }}<br>
-                            Lugar del robo: {{ $aseguramientos[($vehiculo->id)-1]->lugarR }}<br>
-                            Fecha del robo: {{ $aseguramientos[($vehiculo->id)-1]->fechaR }}<br><br>
-                        @endif
+                        Motivo: {{ $registro->motivo }}<br>
+                        Autoridad que asegura: {{ $registro->autoridad }}<br>
+                        Personas aseguradas: {{ $registro->personas }}<br>
+                        Lugar de deposito: {{ $registro->deposito }}<br>
+                        Fecha de aseguramiento: {{ $registro->fecha_as }}<br>
+                        Forma de robo: {{ $registro->formarobo }}<br>
+                        Fuente de informacion: {{ $registro->fuenteinfo }}<br>
+                        Lugar del robo: {{ $registro->lugarR }}<br>
+                        Fecha del robo: {{ $registro->fechaR }}<br><br>
 
-                        @if (count($lugares) > 0)
-                            Estado: {{ $lugares[($vehiculo->id)-1]->est }}<br>
-                            Municipio: {{ $lugares[($vehiculo->id)-1]->mun }}<br>
-                            Localidad: {{ $lugares[($vehiculo->id)-1]->loc }}<br>
-                            Calle: {{ $lugares[($vehiculo->id)-1]->calle }}<br>
-                            Numero: {{ $lugares[($vehiculo->id)-1]->numero }}<br>
-                            Colonia: {{ $lugares[($vehiculo->id)-1]->colonia }}<br><br>
-                        @endif
+                        Estado: {{ $registro->est }}<br>
+                        Municipio: {{ $registro->mun }}<br>
+                        Localidad: {{ $registro->loc }}<br>
+                        Calle: {{ $registro->calle }}<br>
+                        Numero: {{ $registro->numero }}<br>
+                        Colonia: {{ $registro->colonia }}<br><br>
 
-                        @if (count($recibimientos) > 0)
-                            Autoridad que recibe: {{ $recibimientos[($vehiculo->id)-1]->aut_rec }}<br>
-                            Titular: {{ $recibimientos[($vehiculo->id)-1]->titular }}<br>
-                            Carpeta de investigacion: {{ $recibimientos[($vehiculo->id)-1]->cpet_inv }}<br>
-                            Delito que se investiga: {{ $recibimientos[($vehiculo->id)-1]->delito }}<br>
-                        @endif
+                        Autoridad que recibe: {{ $registro->aut_rec }}<br>
+                        Titular: {{ $registro->titular }}<br>
+                        Carpeta de investigacion: {{ $registro->cpet_inv }}<br>
+                        Delito que se investiga: {{ $registro->delito }}<br><br>
+
+                        Elemento: {{ $registro->elemento }}<br>
+                        Cargo: {{ $registro->cargo}}<br>
+                        Unidad: {{ $registro->unidad }}<br>
+                        Distrito: {{ $registro->distrito }}<br>
+                        Recha del registro: {{ $registro->fecha_reg }}<br>
 
                     </div>
                 </div>

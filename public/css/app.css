@@ -34,6 +34,9 @@ body{
     --bs-accordion-btn-bg: rgb(39, 41, 61);
     --bs-accordion-active-bg: rgb(0, 0, 0);
     --bs-accordion-active-color: rgb(0, 0, 0);
-    --bs-accordion-bg: rgb(51, 49, 66);
-    
+    --bs-accordion-bg: rgb(51, 49, 66);   
+}
+
+.col{
+    min-width: 215px;
 }

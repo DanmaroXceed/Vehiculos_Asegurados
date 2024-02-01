@@ -28,10 +28,10 @@
                 @endif --}}
 
                 <div class="row">
+                    <div>
+                        <h5>Del vehiculo</h5>
+                    </div>
                     <div class="col">
-                        <div>
-                            <h5>Del vehiculo</h5>
-                        </div>
 
                         <div class="mb-3">
                             <label for="clasif" class="form-label">Clasificacion</label>
@@ -137,8 +137,9 @@
                             <label for="color" class="form-label">Color</label>
                             <input value="" type="text" class="form-control" name="color">
                         </div>
-
-
+                    
+                    </div>
+                    <div class="col">
                         <div class="mb-3">
                             <label for="s_orig" class="form-label">Serie original</label>
                             <input value="" type="text" class="form-control" name="s_orig">
@@ -174,7 +175,9 @@
                         </div>
 
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col">
                         <div>
                             <h5>Aseguramiento</h5>
@@ -345,7 +348,7 @@
                     
                     <div class="col">
                         <div>
-                            <h5>Autoridad</h5>
+                            <h5>Recibimiento</h5>
                         </div>
                         <div class="mb-3">
                             <label for="aut_rec" class="form-label">Autoridad que recibe</label>
@@ -372,6 +375,15 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+                </div>
+
+                <div class="row text-white align-items-center">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="fotos[]" class="form-label">Cargar fotografias</label>
+                            <input class="form-control" type="file" name="fotos[]" multiple>
+                          </div>                          
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>

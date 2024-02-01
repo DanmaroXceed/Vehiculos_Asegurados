@@ -145,13 +145,9 @@ class VehicController extends Controller
     }
 
     public function registrar(Request $request){
-        //  Validar los datos
-        // $request -> validate([
-        //     'nombre' => 'required',
-        //     'correo' => 'required|email',
-        //     'usuario' => 'required',
-        //     'contra' => 'required',
-        //     'password' => 'required|same:contra',
+        // $request->validate([
+        //     'fotos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+        //     'fotos' => 'max:5'
         // ]);
         
         $vehi = new Vehiculo();
@@ -216,17 +212,6 @@ class VehicController extends Controller
             $registro -> distrito_id = $user -> distrito_id;
             $registro -> fecha = date('Y-m-d H:i:s');
 
-            foreach ($request->fotos as $foto) {
-                echo($foto . ' | ');
-                // $nombre = $foto->getClientOriginalName();
-                // $ruta = $foto->storeAs('fotos', $nombre, 'public');
-    
-                // Photo::create([
-                //     'nombre' => $nombre,
-                //     'ruta' => $ruta,
-                // ]);
-            }
-            
             // $vehi -> save();
             // $datos_r -> save();
             // $aseg -> save();
@@ -234,6 +219,15 @@ class VehicController extends Controller
             // $recib -> save();
             // $registro -> save();
             
+            foreach ($request->file('fotos') as $foto) {
+                $nombre = $foto->getClientOriginalName();
+                // $ruta = $foto->storeAs($registro->id, $nombre, 'public');    
+                // Photo::create([
+                //     'nombre' => $nombre,
+                //     'ruta' => $ruta,
+                // ]);
+            }
+
             // return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
         } catch (\Illuminate\Database\QueryException $ex) {
             echo($ex);

@@ -4,7 +4,7 @@
     <div class="text-white m-3 contenido">
         <div class="container p-4 my-4">
             <h3 class="mb-2 pb-5">Registrar vehiculo</h3>
-            <form action="{{ route('guardar-nuevo-VA') }}" method="POST">
+            <form action="{{ route('guardar-nuevo-VA') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 {{-- @error('nameDoc')
@@ -382,7 +382,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="fotos[]" class="form-label">Cargar fotografias</label>
-                            <input class="form-control" type="file" name="fotos[]" multiple>
+                            <input class="form-control" type="file" name="fotos[]" accept=".jpeg, .png, .jpg" multiple>
                           </div>                          
                     </div>
                 </div>

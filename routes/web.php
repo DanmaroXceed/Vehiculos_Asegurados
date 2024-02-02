@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-submarca-v/{marca_id}', [VehicController::class, 'get_submarca']);
     Route::get('/get-municipios/{id}', [VehicController::class, 'get_municipios']);
     Route::get('/get-localidades/{val}/{id}', [VehicController::class, 'get_localidades']);
+    Route::get('/get-fotos/{id}', [VehicController::class, 'get_fotos']);
     Route::post('/va/registrar', [VehicController::class, 'registrar'])->name('guardar-nuevo-VA');
 
 });

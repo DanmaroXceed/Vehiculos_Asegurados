@@ -40,3 +40,27 @@ body{
 .col{
     min-width: 215px;
 }
+
+.foto {
+    max-width: 300px;
+    max-height: 200px;
+    margin: 5px; /* Margen entre las fotos */
+    display: inline-block; /* Hace que las fotos se alineen en línea */
+}
+
+.fotos{
+    text-align: center;
+}
+
+.contacor{
+    max-width: 15%;
+    max-height: 25%;
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+
+.accordion-body{
+    text-align: center;
+}

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Encoders\WebpEncoder;
+use Intervention\Image\Drivers\Gd\Driver;
 use App\Models\Clasif_vehi;
 use App\Models\Tipo_vehi;
 use App\Models\Marca;
@@ -23,6 +26,7 @@ use App\Models\Lugar;
 use App\Models\Delito;
 use App\Models\Recibimiento;
 use App\Models\Registro;
+use App\Models\Foto;
 
 class VehicController extends Controller
 {
@@ -93,7 +97,7 @@ class VehicController extends Controller
         ->where('municipios.mun_id', '=', DB::raw('localidades.mun_id'))
         ->where('municipios.est_id', '=', DB::raw('localidades.est_id'))
         ->get();
-        
+
         return view('vehiculos', compact('registros'));
     }
 
@@ -142,6 +146,12 @@ class VehicController extends Controller
             ->where('mun_id', $mun)
             ->where('est_id', $est)
             ->orderBy('descripcion')->get());
+    }
+
+    public function get_fotos($id){
+        return json_encode(Foto::select('*')
+            ->where('registro_id','=',$id)
+            ->get());
     }
 
     public function registrar(Request $request){
@@ -219,16 +229,31 @@ class VehicController extends Controller
             // $recib -> save();
             // $registro -> save();
             
+            
             foreach ($request->file('fotos') as $foto) {
-                $nombre = $foto->getClientOriginalName();
-                // $ruta = $foto->storeAs($registro->id, $nombre, 'public');    
-                // Photo::create([
-                //     'nombre' => $nombre,
-                //     'ruta' => $ruta,
-                // ]);
+                $manager = new ImageManager(Driver::class);
+
+                // reading gif image
+                $image = $manager->read($foto);
+
+                // encoding jpeg data
+                $encoded = $image->encode(new WebpEncoder(quality: 65));
+                $imageName = uniqid().'.webp';
+                $ruta = storage_path() . '/app/public/imagenes' . '/'. $registro->id . '/';
+                if (!file_exists($ruta)) {
+                    mkdir($ruta, 0775, true);
+                }
+
+                $encoded->save($ruta . $imageName);
+
+                Foto::create([
+                    'nombre' => $imageName,
+                    'ruta' => $ruta,
+                    'registro_id' => $registro->id,
+                ]);
             }
 
-            // return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
+            return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
         } catch (\Illuminate\Database\QueryException $ex) {
             echo($ex);
         }

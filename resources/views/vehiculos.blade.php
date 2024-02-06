@@ -88,7 +88,7 @@
                                     type: 'GET',
                                     url: '/get-fotos/' + id,
                                     success: function success(data) {
-                                        $('div[name="fotos"]').children('div').remove();
+                                        $('div[name="fotos"]').children('img').remove();
 
                                         var foto = JSON.parse(data);
                                         

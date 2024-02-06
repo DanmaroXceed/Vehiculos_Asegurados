@@ -17,7 +17,7 @@
                         </button>
                     </h2>
                     <div id="collapse{{ $user->id }}" class="accordion-collapse collapse text-white" data-bs-parent="#accordion">
-                        <div class="accordion-body">
+                        <div class="accordion-body datos-user">
                             Usuario: {{ $user->usuario }} <br>
                             Email: {{ $user->email }} <br>
                             Cargo: {{ $user->cdesc }} <br>

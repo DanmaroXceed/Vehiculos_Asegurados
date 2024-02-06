@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Cargo;
 use App\Models\Unidad;
@@ -13,6 +14,7 @@ use App\Models\Distrito;
 
 class LoginController extends Controller
 {
+    // Cargar catalogos y mostrar el registro de usuario
     public function index(){
         $cargos = Cargo::where('id', '>', 1)->get();
         $unidades = Unidad::where('id', '>', 1)->get();
@@ -21,16 +23,61 @@ class LoginController extends Controller
         return view('reg_usuario', compact('cargos','unidades', 'distritos'));
     }
 
-
-    public function registrar(Request $request){
-        //  Validar los datos
-        $request -> validate([
-            'nombre' => 'required',
-            'correo' => 'required|email',
-            'usuario' => 'required',
-            'contra' => 'required',
+    // Validar campos y guardar usuario
+    public function registrar(Request $request){       
+        // Validación de los campos del formulario
+        $validator = Validator::make($request->all(), [
+            // Regex: texto con espacios unicamente
+            'nombre' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:50'],
+            'correo' => 'required|email|unique:users,email',
+            'usuario' => 'required|unique:users',
+            'contra' => 'required|min:8',
             'password' => 'required|same:contra',
+            'cargo_id' => 'required|not_in:""',
+            'unidad_id' => 'required|not_in:""',
+            'distrito_id' => 'required|not_in:""',
+        ], [
+            // Mensajes de error
+            'nombre.required' => 'El campo :attribute es obligatorio.',
+            'nombre.regex' => 'El campo :attribute debe de ser texto.',
+            'nombre.max' => 'El campo :attribute debe de ser maximo de 50 caracteres.',
+
+            'usuario.required' => 'El campo :attribute es obligatorio.',
+            'usuario.unique' => 'Nombre de usuario en uso',
+
+            'correo.required' => 'El campo :attribute es obligatorio.',
+            'correo.email' => 'Introduzca un correo electronico valido',
+            'correo.unique' => 'Correo electronico en uso',
+
+            'contra.required' => 'El campo :attribute es obligatorio.',
+            'contra.min' => 'La contraseña debe ser de al menos 8 caracteres',
+
+            'password.required' => 'El campo :attribute es obligatorio',
+            'password.same' => 'La confirmación de la contraseña no coincide con la contraseña ingresada.',
+
+            'cargo_id.required' => 'El campo :attribute es obligatorio.',
+            'unidad_id.required' => 'El campo :attribute es obligatorio.',
+            'distrito_id.required' => 'El campo :attribute es obligatorio.',
         ]);
+
+        // Personalizar nombres de atributo
+        $validator->setAttributeNames([
+            'nombre' => 'Nombre',
+            'usuario' => 'Usuario',
+            'correo' => 'Correo electrónico',
+            'contra' => 'Contraseña',
+            'password' => 'Confirmar Contraseña',
+            'cargo_id' => 'Cargo',
+            'unidad_id' => 'Unidad',
+            'distrito_id' => 'Distrito',
+        ]);
+
+        // Si la validación falla, redirige de nuevo al formulario con los errores
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput(); // Para mantener los datos anteriores en el formulario
+        }
         
         $usuario = new User();
         try {
@@ -44,12 +91,13 @@ class LoginController extends Controller
             $usuario -> distrito_id = $request -> distrito_id;
 
             $usuario -> save();
-            return redirect()->route('registrar')->with('correcto', 'Usuario creado satisfactoriamente');
+            return redirect()->route('registrar')->with('correcto', 'Usuario guardado satisfactoriamente');
         } catch (\Illuminate\Database\QueryException $ex) {
             return back()->with('error', 'Prueba con otro correo electronico o nombre de usuario');
         }
     }
     
+    // Validacion login y acceso
     public function acceder(Request $request){
         $request -> validate([
             'usuario' => 'required',
@@ -71,6 +119,7 @@ class LoginController extends Controller
         }
     }
 
+    // Logout
     public function salir(Request $request){
         Auth::logout();
 

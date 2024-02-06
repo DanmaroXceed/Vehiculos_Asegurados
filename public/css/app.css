@@ -64,3 +64,15 @@ body{
 .accordion-body{
     text-align: center;
 }
+
+.error {
+    text-align: left;
+    margin-left: 5px;
+    color: #dc3545; /* Color rojo (puedes ajustar el color según tus preferencias) */
+    font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+    margin-top: 0.25rem; /* Espaciado superior pequeño */
+}
+
+.datos-user{
+    text-align: left;
+}

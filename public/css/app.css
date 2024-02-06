@@ -1,5 +1,17 @@
 body{
     background-color: rgb(33, 37, 41);
+    max-width: 97%;
+}
+
+footer{
+    background-color:rgb(33, 37, 41);
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .sidebar {

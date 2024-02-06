@@ -30,7 +30,7 @@ class LoginController extends Controller
             // Regex: texto con espacios unicamente
             'nombre' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:50'],
             'correo' => 'required|email|unique:users,email',
-            'usuario' => 'required|unique:users',
+            'usuario' => 'required|unique:users|max:20',
             'contra' => 'required|min:8',
             'password' => 'required|same:contra',
             'cargo_id' => 'required|not_in:""',
@@ -44,6 +44,7 @@ class LoginController extends Controller
 
             'usuario.required' => 'El campo :attribute es obligatorio.',
             'usuario.unique' => 'Nombre de usuario en uso',
+            'usuario.max' => 'El campo :attribute debe de ser maximo de 20 caracteres.',
 
             'correo.required' => 'El campo :attribute es obligatorio.',
             'correo.email' => 'Introduzca un correo electronico valido',
@@ -99,10 +100,22 @@ class LoginController extends Controller
     
     // Validacion login y acceso
     public function acceder(Request $request){
-        $request -> validate([
-            'usuario' => 'required',
-            'contra' => 'required'
+        $validator = Validator::make($request->all(), [
+            'usuario' => 'required|max:20',
+            'contra' => 'required|min:8'
+        ],[ //  Mensajes de errores obligatorio
+            'usuario.required' => 'El campo :attribute es obligatorio.',
+            'usuario.max' => 'No puede ser mayor a 20 caracteres.',
+            
+            'contra.required' => 'El campo :attribute es obligatorio.',
+            'contra.min' => 'No puede ser menor a 8 caracteres.',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput(); // Para mantener los datos anteriores en el formulario
+        }
 
         $credenciales = [
             'usuario' => $request -> usuario,
@@ -115,7 +128,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
             return redirect(route('home'));
         }else{
-            return redirect('/');
+            return back()->with('error', 'Credenciales erroneas, intente de nuevo');
         }
     }
 

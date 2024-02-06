@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
             'usuario' => 'admin',
             'tipo' => 1,
-            'password' => 'Admin@',
+            'password' => 'admin123',
             'cargo_id' => 1,
             'unidad_id' => 1,
             'distrito_id' => 1,

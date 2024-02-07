@@ -72,7 +72,7 @@
                             <strong>Cargo:</strong> {{ $registro->cargo}}<br>
                             <strong>Unidad:</strong> {{ $registro->unidad }}<br>
                             <strong>Distrito:</strong> {{ $registro->distrito }}<br>
-                            <strong>Recha del registro:</strong> {{ $registro->fecha_reg }}<br>
+                            <strong>Fecha del registro:</strong> {{ $registro->fecha_reg }}<br>
                         </div>
                         
                         <div class="my-3 fotos" name="fotos">

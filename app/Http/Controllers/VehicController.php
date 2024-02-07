@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use App\Models\Clasif_vehi;
 use App\Models\Tipo_vehi;
 use App\Models\Marca;
@@ -96,6 +98,7 @@ class VehicController extends Controller
         ->where('localidades.loc_id', '=', DB::raw('lugares.loc_id'))
         ->where('municipios.mun_id', '=', DB::raw('localidades.mun_id'))
         ->where('municipios.est_id', '=', DB::raw('localidades.est_id'))
+        ->orderby('registros.id')
         ->get();
 
         return view('vehiculos', compact('registros'));
@@ -155,11 +158,67 @@ class VehicController extends Controller
     }
 
     public function registrar(Request $request){
-        // $request->validate([
-        //     'fotos.*' => 'image|mimes:jpeg,png,jpg|max:2048',
-        //     'fotos' => 'max:5'
-        // ]);
-        
+        // Validaciones
+        $validator = Validator::make($request->all(), [
+            'clasific_id' => 'required',
+            'tipo_id' => 'required',
+            'marca_id' => 'required',
+            'submarca_id' => 'required',
+            'anio_mod' => 'required',
+            'color' => 'required|max:30',
+            's_orig' => ['required','max:20','regex:/^([ABCDEFGHJKLMNPRSTUVWXYZ]|[0-9]){0,20}$/'],
+            's_apo' => ['required','max:20','regex:/^([ABCDEFGHJKLMNPRSTUVWXYZ]|[0-9]){0,20}$/'],
+            'no_motor' => 'required|max:20',
+            'placas' => ['required','max:10','regex:/^[A-Z]|[0-9]{0,10}$/'],
+            'or_sob' => 'required',
+            'cond_vehi' => 'required|max:300',
+            
+            'motivo_id' => 'required',
+            'autoridad_as_id' => 'required',
+            'personas' => 'required|max:300',
+            'deposito' => 'required|max:50',
+            'fecha' => 'required|date|before_or_equal:' . Carbon::now()->toDateString(),
+            
+            'fuente_id' => 'required_if:motivo_id,1',
+            'lugarrobo' => 'required_if:motivo_id,1',
+            'fecharobo' => 'required_if:motivo_id,1',
+            'forma_robo_id' => 'required_if:motivo_id,1',
+
+            'est_id' => 'required',
+            'municipio' => 'required',
+            'localidad' => 'required',
+            'calle' => 'required|max:80',
+            'numero' => 'required|max:20',
+            'colonia' => 'required|max:80',
+            
+            'aut_rec' => 'required|max:50',
+            'titular' => 'required|max:50',
+            'cpet1' => 'required|max:8',
+            'cpet2' => 'required|max:4',
+            'cpet3' => 'required|max:6',
+            'delito_id' => 'required|max:80',
+        ], [
+            // Mensajes de error
+            'required' => 'El campo es obligatorio',
+            'required_if' => 'El campo es obligatorio',
+            'required_unless' => 'El campo es obligatorio',
+            'max' => 'Maximo :max caracteres',
+            'before_or_equal' => 'Introduzca una fecha valida',
+            'date' => 'Introduzca una fecha valida',
+            'regex' => 'Informacion no valida',
+            'cpet1.required' => 'Obligatorio',
+            'cpet2.required' => 'Obligatorio',
+            'cpet3.required' => 'Obligatorio',
+        ]);
+
+        // Si la validación falla, redirige de nuevo al formulario con los errores
+        if ($validator->fails()) {
+            // dd($errors = $validator->errors()->all());
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput(); // Para mantener los datos anteriores en el formulario
+        }
+
         $vehi = new Vehiculo();
         $aseg = new Aseguramiento();
         $datos_r = new DatosRobo();
@@ -187,7 +246,7 @@ class VehicController extends Controller
                 $datos_r -> lugar = $request -> lugarrobo;
                 $datos_r -> fecha = $request -> fecharobo;
                 $datos_r -> forma_robo_id = $request -> forma_robo_id;
-                
+                $datos_r -> save();
             }else{
                 $datos_r -> id = 1;
             }
@@ -211,6 +270,11 @@ class VehicController extends Controller
             $cpet = $request -> cpet1 . '/' . $request -> cpet2 . '-' . $request -> cpet3;
             $recib -> cpet_inv = $cpet;
             $recib -> delito_id = $request -> delito_id;
+
+            $vehi -> save();
+            $aseg -> save();
+            $lugar -> save();
+            $recib -> save();
                        
             $registro -> vehiculo_id = $vehi -> id;
             $registro -> aseguramiento_id = $aseg -> id;
@@ -222,40 +286,39 @@ class VehicController extends Controller
             $registro -> distrito_id = $user -> distrito_id;
             $registro -> fecha = date('Y-m-d H:i:s');
 
-            // $vehi -> save();
-            // $datos_r -> save();
-            // $aseg -> save();
-            // $lugar -> save();
-            // $recib -> save();
-            // $registro -> save();
+            $registro -> save();
             
-            
-            foreach ($request->file('fotos') as $foto) {
-                $manager = new ImageManager(Driver::class);
-
-                // reading gif image
-                $image = $manager->read($foto);
-
-                // encoding jpeg data
-                $encoded = $image->encode(new WebpEncoder(quality: 65));
-                $imageName = uniqid().'.webp';
-                $ruta = storage_path() . '/app/public/imagenes' . '/'. $registro->id . '/';
-                if (!file_exists($ruta)) {
-                    mkdir($ruta, 0775, true);
+            if($request->hasFile('fotos')){
+                foreach ($request->file('fotos') as $foto) {
+                    $manager = new ImageManager(Driver::class);
+    
+                    // reading gif image
+                    $image = $manager->read($foto);
+    
+                    // encoding jpeg data
+                    $encoded = $image->encode(new WebpEncoder(quality: 65));
+                    $imageName = uniqid().'.webp';
+                    $ruta = storage_path() . '/app/public/imagenes' . '/'. $registro->id . '/';
+                    if (!file_exists($ruta)) {
+                        mkdir($ruta, 0775, true);
+                    }
+    
+                    $encoded->save($ruta . $imageName);
+    
+                    Foto::create([
+                        'nombre' => $imageName,
+                        'ruta' => $ruta,
+                        'registro_id' => $registro->id,
+                    ]);
                 }
-
-                $encoded->save($ruta . $imageName);
-
-                Foto::create([
-                    'nombre' => $imageName,
-                    'ruta' => $ruta,
-                    'registro_id' => $registro->id,
-                ]);
             }
+            
+            // dd($request);
 
             return redirect()->route('vehiculos');//->with('correcto', 'Usuario creado satisfactoriamente');
         } catch (\Illuminate\Database\QueryException $ex) {
-            echo($ex);
+            dd($ex);
+            // return redirect()->back();
         }
     }
 }

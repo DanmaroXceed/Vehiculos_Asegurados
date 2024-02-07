@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::post('/', [LoginController::class, 'acceder'])->name('loggear');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'web'])->group(function () {
     //  Salir
     Route::post('/logout', [LoginController::class, 'salir'])->name('logout');
 

@@ -18,9 +18,9 @@ use App\Http\Controllers\VehicController;
 
 Route::get('/', function () {
     return view('login');
-})->name('login');
+})->name('login')->middleware('guest');
 
-Route::post('/', [LoginController::class, 'acceder'])->name('loggear');
+Route::post('/', [LoginController::class, 'acceder'])->name('loggear')->middleware('guest');
 
 
 Route::middleware(['auth', 'web'])->group(function () {
@@ -28,7 +28,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::post('/logout', [LoginController::class, 'salir'])->name('logout');
 
     //  Home
-    Route::get('/home', [VehicController::class, 'contarVehiculos'])->name('home');
+    Route::get('/home', [VehicController::class, 'contarDatos'])->name('home');
 
     //  Usuarios
     Route::get('/us', [UserController::class, 'index'])->name('usuarios');

@@ -104,11 +104,14 @@ class VehicController extends Controller
         return view('vehiculos', compact('registros'));
     }
 
-    public function contarVehiculos(){
-        $vehiculos = DB::scalar(
-            "select count(id) from vehiculos"
+    public function contarDatos(){
+        $registros = DB::scalar(
+            "select count(id) from registros"
         );
-        return view('resumen', compact('vehiculos'));
+        $users = DB::scalar(
+            "select count(id) from users"
+        );
+        return view('resumen', compact('registros', 'users'));
 
     }
 

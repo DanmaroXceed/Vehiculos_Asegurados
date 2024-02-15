@@ -489,7 +489,30 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <!-- Button trigger modal -->
+                <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Enviar
+                </a>
+
+                <!-- Modal -->
+                <div class="modal fade text-black" id="staticBackdrop" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Confirmacion</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Confirme cada uno de los campos, al encontrar un error seran borrados los registros y debera iniciar nuevamente la captura.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Entendido</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

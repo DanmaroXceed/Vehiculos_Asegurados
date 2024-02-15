@@ -1,7 +1,7 @@
 @extends('home')
 
 @section('contenido')
-    <div class="row m-3">
+    <div class="row mt-5 mx-3">
         <div class="text-white KPI col">
             <div class="p-3">
                 Cantidad de Vehiculos Asegurados <br>

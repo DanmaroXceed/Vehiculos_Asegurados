@@ -29,17 +29,17 @@ footer{
 	align-items: center;
 	justify-content: center;
 	margin: 0;
+    margin-top: 50px; 
 }
 
 .contenido {
     width:fit-content;
     border-radius: 10px; /* Bordes redondos */
     background: rgb(39, 41, 61);
-    z-index: 900;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     min-width: 30%;
-    min-height: 100px
+    min-height: 100px;
 }
 
 .KPI{
